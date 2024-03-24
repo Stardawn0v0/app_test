@@ -11,7 +11,7 @@ def is_device_connected() -> bool:
     """
     output = subprocess.check_output(['adb', 'devices']).decode('utf-8')
     devices = re.findall(r'(\w+)\s+device\b', output)
-    return len(devices) > 0
+    return len(devices) == 1
 
 
 def push_aapt() -> None:
@@ -20,8 +20,8 @@ def push_aapt() -> None:
     """
     aapt_path = 'aapt-arm-pie'  # 假设aapt-arm-pie与该脚本在同一目录下
     remote_path = '/data/local/tmp/aapt-arm-pie'
-    subprocess.run(['adb', 'push', aapt_path, remote_path])
-    subprocess.run(['adb', 'shell', 'chmod', '+x', remote_path])
+    subprocess.run(['adb', 'push', aapt_path, remote_path], creationflags=subprocess.CREATE_NO_WINDOW)
+    subprocess.run(['adb', 'shell', 'chmod', '+x', remote_path], creationflags=subprocess.CREATE_NO_WINDOW)
 
 
 def get_apk_path(package_name: str) -> Optional[str]:
