@@ -1,6 +1,13 @@
+import os
 import time
 from typing import List
 from time_test import get_launch_info
+
+"""
+python -m nuitka --output-dir=dist --remove-output --output-file=timeTest --include-data-files=aapt-arm-pie=./aapt-arm-pie --onefile --follow-imports main_cli.py
+"""
+
+AARM_PATH = os.path.join(os.path.dirname(__file__), 'aapt-arm-pie')
 
 
 def input_package_names() -> List[str]:
@@ -38,6 +45,7 @@ def main():
         time.sleep(1)  # 每个应用测试完毕后等待1秒
 
     print(f"\n所有应用总完全启动时间: {total_complete_launch_time:.2f} 秒")
+    input("测试完成，按回车键退出")
 
 
 if __name__ == "__main__":
